@@ -1,0 +1,11 @@
+{% extends 'baza/base.html' %}
+
+{% block content %}
+<div class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <h1>Czy na pewno usunąć lokalizacje {{lokalizacja.nazwa}}?</h1>
+        <p><button type="submit" class="btn btn-primary">Usuń</button> <a href="{% url 'lokalizacje' lokalizacja.klient.id %}">Anuluj</a> </p>
+    </form>
+</div>
+{% endblock %}>

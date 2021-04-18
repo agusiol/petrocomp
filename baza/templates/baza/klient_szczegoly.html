@@ -1,0 +1,42 @@
+{% extends 'baza/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Szczegóły klienta: {{klient.nazwa}}</h2>
+    <table class="table table-striped table-bordered">
+
+        <tbody>
+        <tr>
+            <th style="width:30%">ID</th>
+            <td>{{klient.id}}</td>
+        </tr>
+
+        <tr>
+            <th scope="col">Nazwa</th>
+            <td>{{klient.nazwa}}</td>
+        </tr>
+
+        <tr>
+            <th scope="col">Kod pocztowy</th>
+            <td>{{klient.kod_pocztowy}}</td>
+        </tr>
+
+        <tr>
+            <th scope="col">Miejscowość</th>
+            <td>{{klient.miejscowosc}}</td>
+        </tr>
+        <tr>
+            <th scope="col">Telefon</th>
+            <td>{{klient.telfon}}</td>
+        </tr>
+
+        </tbody>
+    </table>
+    <a href="{% url 'klient_edytuj' klient.id %}" class="btn btn-primary">Edytuj</a>
+    <a href="{% url 'klient_usun' klient.id %}" class="btn btn-danger">Usuń</a>
+    <a href="{% url 'lokalizacja_dodaj' klient.id %}" class="btn btn-primary">Dodaj lokalizacje</a>
+
+
+</div>
+{% endblock %}
+

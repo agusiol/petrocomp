@@ -1,0 +1,44 @@
+{% extends 'baza/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h3>Lokalizacje dla {{klient.nazwa}}</h3>
+    <a href="{% url 'lokalizacja_dodaj' klient.id %}" class="btn btn-primary">Dodaj lokalizacje</a>
+    <br>
+    <br>
+    {% if lokalizacje %}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">Licencja</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for lokalizacja in lokalizacje %}
+        <tr>
+            <th scope="row">{{lokalizacja.id}}</th>
+            <td><a href="{% url 'lokalizacja_szczegoly' lokalizacja.id %}">{{ lokalizacja.nazwa }}</a></td>
+
+            <td>
+                {% if lokalizacja.licencja %}
+                <<a href="{% url 'licencja_szczegoly' lokalizacja.licencja.id %}"> {{ lokalizacja.licencja }}</a>
+                {% else %}
+                <a href="{% url 'licencja_generuj' klient.id lokalizacja.id %}">generuj</a>
+                {% endif %}
+            </td>
+
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <p>Brak lokalizacji do wyświetlenia.</p>
+
+    {% endif %}
+
+</div>
+{% endblock %}

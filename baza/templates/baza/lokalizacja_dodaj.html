@@ -1,0 +1,45 @@
+{% extends 'baza/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Dodaj lokalizacje do </h1>
+    <form action="." method="POST">
+        {% csrf_token %}
+
+        {% if form.subject.errors %}
+        <ol role="alertdialog">
+            {% for error in form.subject.errors %}
+            <li role="alert"><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+        </ol>
+        {% endif %}
+        {% for field in form %}
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label form-control-sm">{{ field.label_tag }}{% if field.field.required %}<span
+                    class="required">*</span>{% endif %}</label>
+            <!--            <div class="col-sm-10">-->
+            <!--                {{ field }}-->
+            <!--                {% if field.help_text %}-->
+            <!--                <p class="help">{{ field.help_text|safe }}</p>-->
+            <!--                {% endif %}-->
+            <!--            </div>-->
+            <div class="col-sm-10">
+                <input type="{{ field.field.widget.input_type }}" class="form-control form-control-sm"
+                       name="{{ field.name }}"
+                       id="id_{{ field.name }}"
+                       value="{{ field.value|default:'' }}"
+                       maxlength="{{ field.field.max_length }}">
+<!--                       required = "{{ field.field.required }}"-->
+
+
+                <p class="help-text"> {{ field.help_text }} </p>
+            </div>
+
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>
+
+{% endblock %}
+

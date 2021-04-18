@@ -1,0 +1,45 @@
+{% extends 'baza/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Klienci</h1>
+    <a href="{% url 'klient_dodaj' %}" class="btn btn-primary">Dodaj klienta</a>
+    <br>
+    <br>
+    {% if klienci %}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">NIP</th>
+            <th scope="col">Kod pocztowy</th>
+            <th scope="col">Miejscowość</th>
+            <th scope="col">Telefon</th>
+            <th scope="col">Loklizacje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for klient in klienci %}
+        <tr>
+            <th scope="row">{{klient.id}}</th>
+            <td><a href="{%url 'klient_szczegoly' klient.id %}">{{klient.nazwa}}</a></td>
+            <td>{{klient.nip}}</td>
+            <td>{{klient.kod_pocztowy}}</td>
+            <td>{{klient.miejscowosc}}</td>
+            <td>{{klient.telfon}}</td>
+            <td><a href="{%url 'lokalizacje' klient.id %}">Lokazlicacje({{ klient.num_lok}})</a></td>
+
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+
+    {% else %}
+    <p>Brak klientów do wyświetlenia.</p>
+
+    {% endif %}
+</div>
+
+{% endblock %}
