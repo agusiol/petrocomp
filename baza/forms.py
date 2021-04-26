@@ -40,5 +40,6 @@ class LicencjaForm(forms.ModelForm):
         fields = ['nazwa',
                   'wersja_programu',
                   'modul',
+                  'czas_waznosci'
                   ]
 

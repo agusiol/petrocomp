@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 
 class Klient(models.Model):
@@ -37,16 +38,28 @@ class Lokalizacja(models.Model):
     def get_absolute_url(self):
         return reverse('lokalizacja_szczegoly', args=[self.id])
 
+
 class Moduly(models.Model):
     nazwa = models.CharField(max_length=100)
+
     def __str__(self):
         return self.nazwa
+
 
 class Licencja(models.Model):
     lokalizacja = models.OneToOneField(Lokalizacja, on_delete=models.CASCADE)
     modul = models.ManyToManyField(Moduly)
     nazwa = models.CharField(max_length=255)
     data_utworzenia = models.DateTimeField(auto_now=True)
+    OKRES_WAZNOSCI = [
+        (timezone.now() + timezone.timedelta(days=3* 365 / 12), '3 miesiace'),
+        (timezone.now() + timezone.timedelta(days=6* 365 / 12), '6 miesięcy'),
+        (timezone.now() + timezone.timedelta(days=12* 365 / 12), '1 rok'),
+        (timezone.now() + timezone.timedelta(days=24* 365 / 12), '2 lata')
+
+    ]
+    czas_waznosci = models.DateTimeField(choices=OKRES_WAZNOSCI)
+
 
     WERSJE = [
         (1, 'XL-1'),
@@ -54,12 +67,9 @@ class Licencja(models.Model):
         (5, 'XL-5'),
 
     ]
-
     wersja_programu = models.IntegerField(choices=WERSJE)
-
-
-
-
 
     def __str__(self):
         return self.nazwa
+
+
